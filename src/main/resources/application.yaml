@@ -1,0 +1,101 @@
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 200
+      min-spare: 30
+    connection-timeout: 5000ms
+  servlet:
+    context-path: /wx-api
+
+
+
+
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:mapper/**/*Dao.xml
+  global-config:
+    db-config:
+      logic-not-delete-value: 1
+      logic-delete-value: 0
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/office?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      username: root
+      password: yqlzmzr1314
+      initial-size: 8
+      max-active: 16
+      min-idle: 8
+  servlet:
+    multipart:
+      max-file-size: 10MB #单个文件最大大小
+      max-request-size: 100MB #文件最多上传的大小
+
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: yqlzmzr1314
+    jedis:
+      pool:
+        max-active: 1000
+        max-wait: -1ms
+        max-idle: 16
+        min-idle: 8
+#  config set requirepass yqlzmzr1314
+
+  data:
+    mongodb:
+      authentication-database: admin
+      host: localhost
+      port: 27017
+      database: office
+      username: root
+      password: yqlzmzr1314
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    username: 3066617750@qq.com
+    password: aqyhhwgouudedfgi
+  #ksrfudeifeuvdeie
+  #aqyhhwgouudedfgi
+
+office:
+  jwt:
+    secret: abc123456
+    expire: 5
+    cache-expire: 10
+  administrator:
+    code: "000000"
+  email:
+    system: 3066617750@qq.com
+    hr: yqlzmzr@163.com
+
+
+wx:
+  app-id: wx5a3aefbd83ab240c
+  app-secret: 468d43e939f5a39b4e254d8003db1389
+
+baidu:
+  face:
+    appId: 26065390
+    apiKey: lwIT3ePeWb7mz3OUiAjAWGxp
+    secretKey: ltjLdXoILXW7vUSXPw15SsDs8aLMAUPU
+    groupId: zhouzhao

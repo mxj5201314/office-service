@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhouzhao.office.online_collaborative_office.dao.TbWorkdayDao">
+
+    <resultMap type="com.zhouzhao.office.online_collaborative_office.entity.TbWorkday" id="TbWorkdayMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="date" column="date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <select id="searchTodayIsWorkday" resultType="Integer">
+        select `id`
+        from `tb_workday`
+        where `date` = CURRENT_DATE
+    </select>
+
+    <select id="getWorkdayInRange" resultType="String">
+        SELECT date
+        FROM tb_workday
+        WHERE date BETWEEN #{startDate} AND #{endDate}
+    </select>
+
+</mapper>
+

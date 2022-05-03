@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhouzhao.office.online_collaborative_office.dao.TbUserDao">
+
+    <resultMap type="com.zhouzhao.office.online_collaborative_office.entity.TbUser" id="TbUserMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="openId" column="open_id" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="photo" column="photo" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="tel" column="tel" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="hiredate" column="hiredate" jdbcType="TIMESTAMP"/>
+        <result property="role" column="role" jdbcType="VARCHAR"/>
+        <result property="root" column="root" jdbcType="INTEGER"/>
+        <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <select id="haveRootUser" resultType="java.lang.Boolean">
+        select if(count(1), True, False)
+        from tb_user
+        where root = 1
+    </select>
+
+
+    <select id="getUserPermissions" parameterType="String" resultType="String">
+        SELECT p.permission_name
+        FROM tb_user u
+                 JOIN tb_role r ON JSON_CONTAINS(
+                u.role,
+                cast(r.id AS CHAR))
+                 JOIN tb_permission p ON JSON_CONTAINS(
+                r.permissions,
+                CAST(p.id AS CHAR))
+        WHERE u.id = #{userId}
+          and u.`status` = 1;
+    </select>
+
+
+    <select id="getIdByOpenId" parameterType="String" resultType="String">
+        select id
+        from tb_user
+        where open_id = #{openId}
+          and status = 1
+    </select>
+
+    <select id="getNameAndDeptAndTel" parameterType="String"
+            resultType="com.zhouzhao.office.online_collaborative_office.entity.TbUser">
+        SELECT u.name, d.dept_name, u.tel
+        FROM tb_user u
+                 LEFT JOIN tb_dept d ON u.dept_id = d.id
+        WHERE u.id = #{userId}
+          AND u.status = 1
+    </select>
+
+
+    <select id="getUserById" parameterType="string"
+            resultType="com.zhouzhao.office.online_collaborative_office.entity.TbUser">
+        select u.*, td.dept_name
+        from tb_user u
+                 left join tb_dept td on u.dept_id = td.id
+        where u.id = #{userId}
+          AND u.status = 1
+
+    </select>
+
+    <select id="getUserHiredate" parameterType="String" resultType="String">
+        SELECT hiredate
+        FROM tb_user
+        WHERE id = #{userId}
+          AND status = 1
+    </select>
+
+</mapper>
+
