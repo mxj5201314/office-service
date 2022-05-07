@@ -231,8 +231,7 @@ public class CheckinServiceImpl extends ServiceImpl<TbUserDao, TbUser> implement
     }
 
     @Override
-    public List<WeekCheckinDTO> getWeekCheckin(String token, String startDate, String endDate) {
-        String userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
+    public List<WeekCheckinDTO> getWeekCheckin(String userId, String startDate, String endDate) {
 
         //获取指定时间范围内的用户签到记录
         List<TbCheckin> weekCheckinList = checkinDao.getWeekCheckin(userId, startDate, endDate);

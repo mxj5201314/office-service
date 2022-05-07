@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhouzhao.office.online_collaborative_office.dao.TbDeptDao">
+
+    <resultMap type="com.zhouzhao.office.online_collaborative_office.entity.TbDept" id="TbDeptMap">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+</mapper>
+

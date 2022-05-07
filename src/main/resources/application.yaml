@@ -90,8 +90,8 @@ office:
 
 
 wx:
-  app-id: wx5a3aefbd83ab240c
-  app-secret: 468d43e939f5a39b4e254d8003db1389
+  app-id: wx4cb8e9621950da45
+  app-secret: 9d80f4125c50e1cf8bc6031c9319b2df
 
 baidu:
   face:

@@ -24,7 +24,8 @@ public enum RespCodeEnum {
     ERR_CHECKIN_TIMEOUT(4015, "超过下班时间，无法打卡"),
     ERR_CHECKIN_FACE_NOT_EXISTS(4014, "人脸数据不存在"),
     ERR_CHECKIN(4015, "签到失败"),
-    ERR_CHECKIN_EXISTS(4016, "请勿重复签到")
+    ERR_CHECKIN_EXISTS(4016, "请勿重复签到"),
+    ERR_ADD_MEETING(4017, "会议添加失败")
     ;
 
 

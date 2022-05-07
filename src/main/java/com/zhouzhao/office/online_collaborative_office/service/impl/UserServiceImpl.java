@@ -11,6 +11,7 @@ import com.zhouzhao.office.online_collaborative_office.dao.TbUserDao;
 import com.zhouzhao.office.online_collaborative_office.dto.LoginDTO;
 import com.zhouzhao.office.online_collaborative_office.entity.TbUser;
 import com.zhouzhao.office.online_collaborative_office.service.UserService;
+import com.zhouzhao.office.online_collaborative_office.task.MessageTask;
 import com.zhouzhao.office.online_collaborative_office.vo.LoginVO;
 import com.zhouzhao.office.online_collaborative_office.vo.RegisterVO;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +58,9 @@ public class UserServiceImpl extends ServiceImpl<TbUserDao, TbUser> implements U
 
     @Autowired
     private RedisHandler redisHandler;
+
+    @Autowired
+    private MessageTask messageTask;
 
 
     @Override
@@ -132,8 +136,7 @@ public class UserServiceImpl extends ServiceImpl<TbUserDao, TbUser> implements U
     }
 
     @Override
-    public String getUserHiredate(String token) {
-        String userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
+    public String getUserHiredate(String userId) {
 
         return userDao.getUserHiredate(userId);
     }

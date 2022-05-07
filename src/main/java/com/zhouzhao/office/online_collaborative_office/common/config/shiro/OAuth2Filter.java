@@ -89,7 +89,6 @@ public class OAuth2Filter extends AuthenticatingFilter {
         threadLocalToken.clearToken();
         //获取请求token，如果token不存在，直接返回401
         String token = getRequestToken((HttpServletRequest) request);
-        log.error("令牌为：{}", token);
         if (StringUtils.isBlank(token)) {
             String s = JSON.toJSONString(BaseResponse.fail(RespCodeEnum.ERR_TOKEN_INVALID));
             resp.getWriter().print(s);

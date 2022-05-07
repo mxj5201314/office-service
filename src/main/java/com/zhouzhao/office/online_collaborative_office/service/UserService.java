@@ -20,7 +20,7 @@ public interface UserService extends IService<TbUser> {
 
     LoginDTO login(LoginVO loginVO) throws GlobalException;
 
-    TbUser getUserById(String token);
+    TbUser getUserById(String userId);
 
     Set<String> getUserPermissions(String userid);
 
