@@ -3,9 +3,25 @@
 <mapper namespace="com.zhouzhao.office.online_collaborative_office.dao.TbDeptDao">
 
     <resultMap type="com.zhouzhao.office.online_collaborative_office.entity.TbDept" id="TbDeptMap">
-        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
     </resultMap>
+
+    <select id="getDeptMembers" parameterType="String"
+            resultType="com.zhouzhao.office.online_collaborative_office.entity.TbDept">
+        SELECT
+        d.id,
+        d.dept_name AS deptName,
+        COUNT(u.id) AS count
+        FROM tb_dept d LEFT JOIN tb_user u ON u.dept_id=d.id AND u.status=1
+        <if test="keyword!=null">
+            WHERE u.name LIKE '%${keyword}%'
+        </if>
+        GROUP BY d.id
+    </select>
+
+
+
 
 </mapper>
 

@@ -31,7 +31,7 @@ public class MessageDao {
         return entity.get_id();
     }
 
-    public List<HashMap> searchMessageByPage(String userId, long start, int length) {
+    public List<HashMap> searchMessageByPage(Integer userId, long start, int length) {
         JSONObject json = new JSONObject();
         json.set("$toString", "$_id");
         Aggregation aggregation = Aggregation.newAggregation(

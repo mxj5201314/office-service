@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 public class ValidCheckinVO {
     @NotBlank(message = "用户id不能为空")
     @ApiModelProperty(value = "用户id ", required = true)
-    private String userId;
+    private Integer userId;
 
     @NotBlank(message = "日期不能为空")
     @ApiModelProperty(value = "日期 ", required = true)

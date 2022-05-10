@@ -20,14 +20,14 @@ public class MessageRefDao {
         return entity.get_id();
     }
 
-    public long searchUnreadCount(String userId) {
+    public long searchUnreadCount(Integer userId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("readFlag").is(false).and("receiverId").is(userId));
         long count = mongoTemplate.count(query, MessageRefEntity.class);
         return count;
     }
 
-    public long searchLastCount(String userId) {
+    public long searchLastCount(Integer userId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("lastFlag").is(true).and("receiverId").is(userId));
         Update update = new Update();

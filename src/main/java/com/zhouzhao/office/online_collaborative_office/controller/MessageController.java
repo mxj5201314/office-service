@@ -1,5 +1,6 @@
 package com.zhouzhao.office.online_collaborative_office.controller;
 
+import com.zhouzhao.office.online_collaborative_office.common.Exception.GlobalException;
 import com.zhouzhao.office.online_collaborative_office.common.config.shiro.JwtUtil;
 import com.zhouzhao.office.online_collaborative_office.common.constants.JwtConstant;
 import com.zhouzhao.office.online_collaborative_office.common.utils.BaseResponse;
@@ -35,8 +36,8 @@ public class MessageController {
     @PostMapping("/getMessageByPage")
     @ApiOperation("获取分页消息列表")
     public BaseResponse searchMessageByPage(@Valid @RequestBody MessageByPageVO vo,
-                                            @RequestHeader(JwtConstant.HTTP_HEADER_NAME) String token) {
-        String userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
+                                            @RequestHeader(JwtConstant.HTTP_HEADER_NAME) String token) throws GlobalException {
+        Integer userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
         int page = vo.getPage();
         int length = vo.getLength();
         long start = (long) (page - 1) * length;
@@ -67,10 +68,10 @@ public class MessageController {
 
     @GetMapping("/refreshMessage")
     @ApiOperation("刷新用户的消息")
-    public BaseResponse refreshMessage(@RequestHeader(JwtConstant.HTTP_HEADER_NAME) String token) {
-        String userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
+    public BaseResponse refreshMessage(@RequestHeader(JwtConstant.HTTP_HEADER_NAME) String token) throws GlobalException {
+        Integer userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
         //异步接收消息
-        messageTask.receiveAysnc(userId + "");
+        messageTask.receiveAysnc(userId);
         //查询接收了多少条消息
         long lastRows = messageService.searchLastCount(userId);
         //查询未读数据

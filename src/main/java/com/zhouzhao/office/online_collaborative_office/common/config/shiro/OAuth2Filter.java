@@ -1,7 +1,6 @@
 package com.zhouzhao.office.online_collaborative_office.common.config.shiro;
 
 import com.alibaba.fastjson.JSON;
-import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.zhouzhao.office.online_collaborative_office.common.components.RedisHandler;
 import com.zhouzhao.office.online_collaborative_office.common.constants.JwtConstant;
@@ -95,15 +94,18 @@ public class OAuth2Filter extends AuthenticatingFilter {
             return false;
         }
         try {
-            jwtUtil.verifyToken(token); //检查令牌是否过期,过期会抛出异常
+            jwtUtil.verifierToken(token); //检查令牌是否过期,过期会抛出异常
+            if (!redisHandler.exists(token)) {
+                throw new Exception();
+            }
         } catch (TokenExpiredException e) {
             //客户端令牌过期，查询Redis中是否存在令牌，如果存在令牌就重新生成一个令牌给客户端
             if (redisHandler.exists(token)) {
                 redisHandler.remove(token);
-                String userId = jwtUtil.getUserId(token);
+                Integer userId = jwtUtil.getUserId(token);
                 token = jwtUtil.createToken(userId); //生成新的令牌
                 //把新的令牌保存到Redis中
-                redisHandler.setString(token, userId, cacheExpire, initTimeUnit);
+                redisHandler.setString(token, String.valueOf(userId), cacheExpire, initTimeUnit);
                 //把新令牌绑定到线程
                 threadLocalToken.setToken(token);
             } else {
@@ -112,7 +114,7 @@ public class OAuth2Filter extends AuthenticatingFilter {
                 resp.getWriter().print(s);
                 return false;
             }
-        } catch (JWTDecodeException e) {
+        } catch (Exception e) {
             String s = JSON.toJSONString(BaseResponse.fail(RespCodeEnum.ERR_TOKEN_EXPIRE));
             resp.getWriter().print(s);
             return false;

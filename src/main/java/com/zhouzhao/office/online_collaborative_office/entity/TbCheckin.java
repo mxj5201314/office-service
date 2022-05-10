@@ -28,9 +28,9 @@ import java.util.Date;
 public class TbCheckin extends Model<TbCheckin> {
     //主键
     @TableId
-    private String id;
+    private Integer id;
     //用户ID
-    private String userId;
+    private Integer userId;
     //签到地址
     private String address;
     //国家

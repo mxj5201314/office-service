@@ -2,7 +2,6 @@ package com.zhouzhao.office.online_collaborative_office.entity;
 
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.AllArgsConstructor;
@@ -28,8 +27,7 @@ import java.util.Date;
 @TableName("tb_user")
 public class TbUser extends Model<TbUser> {
     //主键
-    @TableId
-    private String id;
+    private Integer id;
     //长期授权字符串
     private String openId;
     //昵称
@@ -60,6 +58,9 @@ public class TbUser extends Model<TbUser> {
     private Integer status;
     //创建时间
     private Date createTime;
+
+    @TableField(exist = false, select = false)
+    private String roles;
 
     /**
      * 获取主键值

@@ -18,10 +18,10 @@ public interface CheckinService extends IService<TbUser> {
 
     void createFace(String image, String token) throws GlobalException;
 
-    List<CheckInDTO> getTodayCheckin(String token);
+    List<CheckInDTO> getTodayCheckin(String token) throws GlobalException;
 
-    Integer getCheckinTotalByUserId(String token);
+    Integer getCheckinTotalByUserId(String token) throws GlobalException;
 
-    List<WeekCheckinDTO> getWeekCheckin(String token, String startDate, String endDate);
+    List<WeekCheckinDTO> getWeekCheckin(Integer userId, String startDate, String endDate);
 
 }

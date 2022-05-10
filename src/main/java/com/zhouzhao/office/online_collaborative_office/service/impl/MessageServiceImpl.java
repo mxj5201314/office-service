@@ -27,7 +27,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<HashMap> searchMessageByPage(String userId, long start, int length) {
+    public List<HashMap> searchMessageByPage(Integer userId, long start, int length) {
         List<HashMap> list = messageDao.searchMessageByPage(userId, start, length);
         return list;
     }
@@ -45,13 +45,13 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public long searchUnreadCount(String userId) {
+    public long searchUnreadCount(Integer userId) {
         long count = messageRefDao.searchUnreadCount(userId);
         return count;
     }
 
     @Override
-    public long searchLastCount(String userId) {
+    public long searchLastCount(Integer userId) {
         long count = messageRefDao.searchLastCount(userId);
         return count;
     }

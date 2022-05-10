@@ -29,8 +29,8 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/office?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-      username: root
+      url: jdbc:mysql://81.68.207.165:3306/office2?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+      username: office2
       password: yqlzmzr1314
       initial-size: 8
       max-active: 16
@@ -42,16 +42,15 @@ spring:
 
   redis:
     database: 0
-    host: localhost
+    host: 81.68.207.165
     port: 6379
     password: yqlzmzr1314
     jedis:
       pool:
         max-active: 1000
-        max-wait: -1ms
         max-idle: 16
         min-idle: 8
-#  config set requirepass yqlzmzr1314
+  #  config set requirepass yqlzmzr1314
 
   data:
     mongodb:
@@ -76,7 +75,7 @@ spring:
     password: aqyhhwgouudedfgi
   #ksrfudeifeuvdeie
   #aqyhhwgouudedfgi
-
+#nohup  java -jar emos-workflow.jar --spring.config.location=application.yml  >> out.log 2>&1 &
 office:
   jwt:
     secret: abc123456
@@ -87,7 +86,8 @@ office:
   email:
     system: 3066617750@qq.com
     hr: yqlzmzr@163.com
-
+  recieveNotify: http://zhouzhao.vipgz1.91tunnel.com/wx-api/approval/recieveNotify
+  code: 61DA76115886FC27
 
 wx:
   app-id: wx4cb8e9621950da45
@@ -99,3 +99,11 @@ baidu:
     apiKey: lwIT3ePeWb7mz3OUiAjAWGxp
     secretKey: ltjLdXoILXW7vUSXPw15SsDs8aLMAUPU
     groupId: zhouzhao
+
+workflow:
+  url: http://81.68.207.165:9090/emos-workflow
+
+trtc:
+  appid: 1400675567
+  key: 0043658b0994a29a6d0645adebbcd19adcfdfeeac8054d5dd7d547b313003719
+  expire: 86400

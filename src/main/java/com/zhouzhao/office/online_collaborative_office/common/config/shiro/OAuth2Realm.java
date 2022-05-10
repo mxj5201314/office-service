@@ -2,6 +2,7 @@ package com.zhouzhao.office.online_collaborative_office.common.config.shiro;
 
 import com.zhouzhao.office.online_collaborative_office.entity.TbUser;
 import com.zhouzhao.office.online_collaborative_office.service.UserService;
+import lombok.SneakyThrows;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -32,7 +33,7 @@ public class OAuth2Realm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection collection) {
         TbUser user = (TbUser) collection.getPrimaryPrincipal();
-        String userId = user.getId();
+        Integer userId = user.getId();
         //用户权限列表
         Set<String> permsSet = userService.getUserPermissions(userId);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
@@ -41,10 +42,11 @@ public class OAuth2Realm extends AuthorizingRealm {
     }
 
 
+    @SneakyThrows
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         String accessToken = (String) authenticationToken.getPrincipal();
-        String userId = jwtUtil.getUserId(accessToken);
+        Integer userId = jwtUtil.getUserId(accessToken);
         //查询用户信息
         TbUser user = userService.getUserById(userId);
         if (user == null) {

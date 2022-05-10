@@ -17,8 +17,8 @@ import java.util.List;
 public interface TbCheckinDao extends BaseMapper<TbCheckin> {
     Integer haveCheckIn(ValidCheckinVO validCheckinVO);
 
-    Integer getCheckinTotalByUserId(String userId);
+    Integer getCheckinTotalByUserId(Integer userId);
 
-    List<TbCheckin> getWeekCheckin(String userId, String startDate, String endDate);
+    List<TbCheckin> getWeekCheckin(Integer userId, String startDate, String endDate);
 }
 

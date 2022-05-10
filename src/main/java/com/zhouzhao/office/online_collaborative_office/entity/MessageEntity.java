@@ -18,7 +18,7 @@ public class MessageEntity implements Serializable {
     private String uuid;
 
     @Indexed
-    private String senderId;
+    private Integer senderId;
 
     private String senderPhoto="https://static-1258386385.cos.ap-beijing.myqcloud.com/img/System.jpg";
 

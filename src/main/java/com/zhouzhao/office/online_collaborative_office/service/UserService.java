@@ -3,10 +3,13 @@ package com.zhouzhao.office.online_collaborative_office.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhouzhao.office.online_collaborative_office.common.Exception.GlobalException;
 import com.zhouzhao.office.online_collaborative_office.dto.LoginDTO;
+import com.zhouzhao.office.online_collaborative_office.dto.UserSummaryDTO;
+import com.zhouzhao.office.online_collaborative_office.entity.TbDept;
 import com.zhouzhao.office.online_collaborative_office.entity.TbUser;
 import com.zhouzhao.office.online_collaborative_office.vo.LoginVO;
 import com.zhouzhao.office.online_collaborative_office.vo.RegisterVO;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,10 +23,20 @@ public interface UserService extends IService<TbUser> {
 
     LoginDTO login(LoginVO loginVO) throws GlobalException;
 
-    TbUser getUserById(String userId);
+    TbUser getUserById(Integer userId);
 
-    Set<String> getUserPermissions(String userid);
+    Set<String> getUserPermissions(Integer userid);
 
-    String getUserHiredate(String userId);
+    String getUserHiredate(Integer userId);
+
+    List<TbDept> getUserGroupByDept(String keyword);
+
+    List<UserSummaryDTO> getMembers(List<Integer> param);
+
+    List<UserSummaryDTO> getUserPhotoAndName(List<Integer> param);
+
+ String getMemberEmail(Integer id);
+
+
 }
 

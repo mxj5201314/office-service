@@ -1,6 +1,7 @@
 package com.zhouzhao.office.online_collaborative_office.entity;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -28,14 +29,14 @@ import java.util.Date;
 @TableName("tb_meeting")
 public class TbMeeting extends Model<TbMeeting> {
     //主键
-    @TableId
-    private String id;
+    @TableId(type = IdType.AUTO)
+    private Integer id;
     //UUID
     private String uuid;
     //会议题目
     private String title;
     //创建人ID
-    private Long creatorId;
+    private Integer creatorId;
     //日期
     private String date;
     //开会地点

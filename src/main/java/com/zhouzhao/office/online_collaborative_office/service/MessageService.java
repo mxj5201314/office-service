@@ -9,11 +9,11 @@ import java.util.List;
 
 public interface MessageService {
     String insertMessage(MessageEntity entity);
-    List<HashMap> searchMessageByPage(String userId, long start, int length);
+    List<HashMap> searchMessageByPage(Integer userId, long start, int length);
     HashMap getMessageById(String id);
     String insertRef(MessageRefEntity entity);
-    long searchUnreadCount(String userId);
-    long searchLastCount(String userId);
+    long searchUnreadCount(Integer userId);
+    long searchLastCount(Integer userId);
     long updateUnreadMessage(String id);
     long deleteMessageRefById(String id);
     long deleteUserMessageRef(int userId);

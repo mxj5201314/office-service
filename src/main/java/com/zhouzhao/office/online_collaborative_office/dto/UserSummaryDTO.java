@@ -11,6 +11,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @ApiModel("用户信息摘要DTO")
 public class UserSummaryDTO extends BaseDTO {
+    @ApiModelProperty("用户id")
+    private Integer id;
+
     @ApiModelProperty("用户姓名")
     private String name;
 

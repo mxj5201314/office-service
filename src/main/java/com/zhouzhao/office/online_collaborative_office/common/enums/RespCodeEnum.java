@@ -25,7 +25,8 @@ public enum RespCodeEnum {
     ERR_CHECKIN_FACE_NOT_EXISTS(4014, "人脸数据不存在"),
     ERR_CHECKIN(4015, "签到失败"),
     ERR_CHECKIN_EXISTS(4016, "请勿重复签到"),
-    ERR_ADD_MEETING(4017, "会议添加失败")
+    ERR_ADD_MEETING(4017, "会议添加失败"),
+    ERR_REQUEST_PARAM(4018,"请求参数类型错误")
     ;
 
 

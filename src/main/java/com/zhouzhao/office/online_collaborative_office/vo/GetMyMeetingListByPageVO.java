@@ -1,4 +1,4 @@
-package com.zhouzhao.office.online_collaborative_office.entity;
+package com.zhouzhao.office.online_collaborative_office.vo;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @ApiModel
 @Data
 
-public class getMyMeetingListByPageVO {
+public class GetMyMeetingListByPageVO {
     @NotNull
     @Min(1)
     private Integer page;

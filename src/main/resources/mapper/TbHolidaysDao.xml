@@ -3,7 +3,7 @@
 <mapper namespace="com.zhouzhao.office.online_collaborative_office.dao.TbHolidaysDao">
 
     <resultMap type="com.zhouzhao.office.online_collaborative_office.entity.TbHolidays" id="TbHolidaysMap">
-        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="date" column="date" jdbcType="TIMESTAMP"/>
     </resultMap>
 

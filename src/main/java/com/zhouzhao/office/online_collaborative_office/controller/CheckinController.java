@@ -45,7 +45,7 @@ public class CheckinController {
 
     @GetMapping("/validCanCheckIn")
     @ApiOperation("查看用户今天是否可以签到")
-    public BaseResponse validCanCheckIn(@RequestHeader(JwtConstant.HTTP_HEADER_NAME) String token) {
+    public BaseResponse validCanCheckIn(@RequestHeader(JwtConstant.HTTP_HEADER_NAME) String token) throws GlobalException {
         ValidCheckinDTO result = checkinService.ValidCheckin(new ValidCheckinVO()
                 .setUserId(jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length())))
                 .setDate(DateUtil.today()));
@@ -83,9 +83,9 @@ public class CheckinController {
 
     @GetMapping("/getTodayCheckin")
     @ApiOperation("查询用户当日签到数据")
-    public BaseResponse getTodayCheckin(@RequestHeader(JwtConstant.HTTP_HEADER_NAME) String token) {
+    public BaseResponse getTodayCheckin(@RequestHeader(JwtConstant.HTTP_HEADER_NAME) String token) throws GlobalException {
         //int userId = jwtUtil.getUserId(token);
-        String userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
+        Integer userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
         TbUser user = userService.getUserById(userId);
         List<CheckInDTO> todayCheckin = checkinService.getTodayCheckin(token);
         Integer total = checkinService.getCheckinTotalByUserId(token);
@@ -120,7 +120,7 @@ public class CheckinController {
     @ApiOperation("查询用户某月签到数据")
     public BaseResponse searchMonthCheckin(@Valid @RequestBody MonthCheckinVO vo,
                                            @RequestHeader(JwtConstant.HTTP_HEADER_NAME) String token) throws GlobalException {
-        String userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
+        Integer userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
         //查询入职日期
         DateTime hiredate = DateUtil.parse(userService.getUserHiredate(userId));
         //把月份处理成双数字

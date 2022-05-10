@@ -28,19 +28,19 @@ public class BaiDuFaceHandler {
 
     private final static String SUCCESS = "SUCCESS";
 
-    public String faceRegister(String id, String liveness_control, String imageType, String image) {
+    public String faceRegister(Integer id, String liveness_control, String imageType, String image) {
         // 传入可选参数调用接口
         HashMap<String, String> options = new HashMap<>();
 
         options.put("liveness_control", liveness_control);
         // 人脸注册
-        JSONObject res = aipFace.addUser(image, imageType, groupId, id, options);
+        JSONObject res = aipFace.addUser(image, imageType, groupId, id+"", options);
         System.out.println(res.toString(2));
 
         return res.getJSONObject("result").getString("face_token");
     }
 
-    public Boolean faceIsExist(String id, String liveness_control, String imageType, String image) {
+    public Boolean faceIsExist(Integer id, String liveness_control, String imageType, String image) {
         // 传入可选参数调用接口
         HashMap<String, Object> options = new HashMap<>();
         //Releasing transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@90cdf23]

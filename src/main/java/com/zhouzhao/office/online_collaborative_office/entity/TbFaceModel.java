@@ -29,7 +29,7 @@ public class TbFaceModel extends Model<TbFaceModel> {
     @TableId
     private String id;
     //用户ID
-    private String userId;
+    private Integer userId;
     //用户人脸模型
     private String faceToken;
     /**

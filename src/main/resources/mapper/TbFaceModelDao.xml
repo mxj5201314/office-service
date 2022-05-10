@@ -4,7 +4,7 @@
 
     <resultMap type="com.zhouzhao.office.online_collaborative_office.entity.TbFaceModel" id="TbFaceModelMap">
         <result property="id" column="id" jdbcType="VARCHAR"/>
-        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="faceToken" column="face_token" jdbcType="VARCHAR"/>
     </resultMap>
 

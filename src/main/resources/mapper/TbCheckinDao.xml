@@ -3,8 +3,8 @@
 <mapper namespace="com.zhouzhao.office.online_collaborative_office.dao.TbCheckinDao">
 
     <resultMap type="com.zhouzhao.office.online_collaborative_office.entity.TbCheckin" id="TbCheckinMap">
-        <result property="id" column="id" jdbcType="VARCHAR"/>
-        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="address" column="address" jdbcType="VARCHAR"/>
         <result property="country" column="country" jdbcType="VARCHAR"/>
         <result property="province" column="province" jdbcType="VARCHAR"/>
@@ -28,7 +28,7 @@
 
     </select>
 
-    <select id="getCheckinTotalByUserId" parameterType="string" resultType="integer">
+    <select id="getCheckinTotalByUserId" parameterType="integer" resultType="integer">
         select count(distinct date)
         from tb_checkin
         where user_id = #{userId}

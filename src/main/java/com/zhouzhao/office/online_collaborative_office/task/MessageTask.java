@@ -66,17 +66,17 @@ public class MessageTask {
      * @param topic 主题
      * @return 接收消息数量
      */
-    public int receive(String topic) {
+    public int receive(Integer topic) {
         int i = 0;
         try (//接收消息数据
              Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             // 从队列中获取消息，不自动确认
-            channel.queueDeclare(topic, true, false, false, null);
+            channel.queueDeclare(topic+"", true, false, false, null);
             //Topic中有多少条数据未知，所以使用死循环接收数据，直到接收不到消息，退出死循环
             while (true) {
                 //创建响应接收数据，禁止自动发送Ack应答
-                GetResponse response = channel.basicGet(topic, false);
+                GetResponse response = channel.basicGet(topic+"", false);
                 if (response != null) {
                     AMQP.BasicProperties properties = response.getProps();
                     Map<String, Object> header = properties.getHeaders(); //获取附加属性对像
@@ -111,7 +111,7 @@ public class MessageTask {
      * @return
      */
     @Async
-    public int receiveAysnc(String topic) {
+    public int receiveAysnc(Integer topic) {
         return receive(topic);
     }
 

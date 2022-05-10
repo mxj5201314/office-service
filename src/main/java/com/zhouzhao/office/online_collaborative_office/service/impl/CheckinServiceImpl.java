@@ -121,7 +121,7 @@ public class CheckinServiceImpl extends ServiceImpl<TbUserDao, TbUser> implement
         log.error(checkinVO.toString());
         Integer epidemicLevel;
         //解析token得到userid
-        String userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
+        Integer userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
 
         //查询是否注册过人脸
         QueryWrapper<TbFaceModel> user_id = new QueryWrapper<TbFaceModel>().eq("user_id", userId);
@@ -188,7 +188,7 @@ public class CheckinServiceImpl extends ServiceImpl<TbUserDao, TbUser> implement
 
     @Override
     public void createFace(String image, String token) throws GlobalException {
-        String userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
+        Integer userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
 
         //    人脸不存在，第一次使用，记为存档
         String faceToken = baiDuFaceHandler.faceRegister(userId, BaiDuFaceHandler.LIVENESS_CONTROL_LOW, BaiDuFaceHandler.IMAGE_TYPE_BASE64, image);
@@ -207,8 +207,8 @@ public class CheckinServiceImpl extends ServiceImpl<TbUserDao, TbUser> implement
     }
 
     @Override
-    public List<CheckInDTO> getTodayCheckin(String token) {
-        String userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
+    public List<CheckInDTO> getTodayCheckin(String token) throws GlobalException {
+        Integer userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
         QueryWrapper<TbCheckin> eq = new QueryWrapper<TbCheckin>()
                 .eq("user_id", userId)
                 .eq("date", DateUtil.today());
@@ -225,13 +225,13 @@ public class CheckinServiceImpl extends ServiceImpl<TbUserDao, TbUser> implement
 
 
     @Override
-    public Integer getCheckinTotalByUserId(String token) {
-        String userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
+    public Integer getCheckinTotalByUserId(String token) throws GlobalException {
+        Integer userId = jwtUtil.getUserId(token.substring(JwtConstant.TOKEN_HEAD.length()));
         return checkinDao.getCheckinTotalByUserId(userId);
     }
 
     @Override
-    public List<WeekCheckinDTO> getWeekCheckin(String userId, String startDate, String endDate) {
+    public List<WeekCheckinDTO> getWeekCheckin(Integer userId, String startDate, String endDate) {
 
         //获取指定时间范围内的用户签到记录
         List<TbCheckin> weekCheckinList = checkinDao.getWeekCheckin(userId, startDate, endDate);
@@ -308,7 +308,7 @@ public class CheckinServiceImpl extends ServiceImpl<TbUserDao, TbUser> implement
     }
 
 
-    private void sendEmail(String userId, String address) {
+    private void sendEmail(Integer userId, String address) {
         TbUser tbUser = userDao.getNameAndDeptAndTel(userId);
         String name = tbUser.getName();
         String deptName = tbUser.getDeptName();

@@ -1,40 +1,54 @@
 package com.zhouzhao.office.online_collaborative_office.common.config.shiro;
 
-
-import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTCreator;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.zhouzhao.office.online_collaborative_office.common.Exception.GlobalException;
+import com.zhouzhao.office.online_collaborative_office.common.enums.RespCodeEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
+@Slf4j
 public class JwtUtil {
 
+    //密钥
     @Value("${office.jwt.secret}")
     private String secret;
+
+    //过期时间（天）
     @Value("${office.jwt.expire}")
-    private String expire;
+    private int expire;
 
-
-    public  String createToken(String userId) {
-        DateTime dateTime = DateUtil.offsetDay(new Date(), Integer.parseInt(expire));
-        return JWT.create()
-                .withClaim("userId", userId)//存放数据
-                .withExpiresAt(dateTime)
-                .sign(Algorithm.HMAC256(secret));
-    }
-
-    public String getUserId(String token) {
-        System.out.println("jwtUtil-token = " + token);
-        return JWT.decode(token).getClaim("userId").asString();
-    }
-
-    public void verifyToken(String token) {
-        JWT.require(Algorithm.HMAC256(secret)).build().verify(token);
+    public String createToken(int userId) {
+        Date date = DateUtil.offset(new Date(), DateField.DAY_OF_YEAR, expire).toJdkDate();
+        Algorithm algorithm = Algorithm.HMAC256(secret); //创建加密算法对象
+        JWTCreator.Builder builder = JWT.create();
+        String token = builder.withClaim("userId", userId).withExpiresAt(date).sign(algorithm);
+        return token;
     }
 
 
+    public int getUserId(String token) throws GlobalException {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getClaim("userId").asInt();
+        } catch (Exception e) {
+            throw new GlobalException(RespCodeEnum.ERR_TOKEN_INVALID);
+        }
+    }
+
+    public void verifierToken(String token) {
+        Algorithm algorithm = Algorithm.HMAC256(secret); //创建加密算法对象
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        verifier.verify(token);
+    }
 }
+
